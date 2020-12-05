@@ -4,13 +4,13 @@ import string
 f = open("04.txt", "r")
 
 credentials = {
-    "byr": "",
-    "iyr": "",
-    "eyr": "",
-    "hgt": "",
-    "hcl": "",
-    "ecl": "",
-    "pid": "",
+    "byr": False,
+    "iyr": False,
+    "eyr": False,
+    "hgt": False,
+    "hcl": False,
+    "ecl": False,
+    "pid": False
 }
 
 valid = 0
@@ -18,23 +18,23 @@ valid = 0
 
 def findInfo(x, info):
     if(x.find(info+":") != -1):
-        credentials[info] = "1"
+        credentials[info] = True # if found, turn true
 
 
 for x in f:
-    if(x == "\n"):
+    if(x == "\n"): # if line is newline, check passport and make new passport
 
-        if "" not in credentials.values():
+        if False not in credentials.values(): # if only True in credentials
             valid += 1
 
         for i in credentials:
-            credentials[i] = ""
+            credentials[i] = False # reset all values for next passport
 
     else:
         for i in credentials:
             findInfo(x, i)
 else:
-    if "" not in credentials.values():
+    if False not in credentials.values():
         valid += 1
 
 print(valid)
@@ -47,13 +47,13 @@ f.close()
 f = open("04.txt", "r")
 
 credentials = {
-    "byr": "",
-    "iyr": "",
-    "eyr": "",
-    "hgt": "",
-    "hcl": "",
-    "ecl": "",
-    "pid": "",
+    "byr": False,
+    "iyr": False,
+    "eyr": False,
+    "hgt": False,
+    "hcl": False,
+    "ecl": False,
+    "pid": False
 }
 
 
@@ -75,7 +75,7 @@ def byr(x):
             if all(c in string.digits for c in val):    # numbers check
                 val = int(val)
                 if(val >= 1920 and val <= 2002):    # value check
-                    credentials["byr"] = "1"
+                    credentials["byr"] = True
 
 
 def iyr(x):
@@ -87,7 +87,7 @@ def iyr(x):
             if all(c in string.digits for c in val):    # numbers check
                 val = int(val)
                 if(val >= 2010 and val <= 2020):    # value check
-                    credentials["iyr"] = "1"
+                    credentials["iyr"] = True
 
 
 def eyr(x):
@@ -99,7 +99,7 @@ def eyr(x):
             if all(c in string.digits for c in val):    # numbers check
                 val = int(val)
                 if(val >= 2020 and val <= 2030):    # value check
-                    credentials["eyr"] = "1"
+                    credentials["eyr"] = True
 
 
 def hgt(x):
@@ -114,7 +114,7 @@ def hgt(x):
                 if all(c in string.digits for c in val):    # numbers check
                     val = int(val)
                     if(val >= 59 and val <= 76):    # value check
-                        credentials["hgt"] = "1"
+                        credentials["hgt"] = True
         elif "cm" in val:                         # cm
             cm = val.find("cm")
             val = val[0:cm]
@@ -122,7 +122,7 @@ def hgt(x):
                 if all(c in string.digits for c in val):    # numbers check
                     val = int(val)
                     if(val >= 150 and val <= 193):  # value check
-                        credentials["hgt"] = "1"
+                        credentials["hgt"] = True
 
 
 def hcl(x):
@@ -135,7 +135,7 @@ def hcl(x):
             if len(val) == 7:                            # 6 digits check
                 val = val[1:]
                 if all(c in string.hexdigits for c in val):  # hex check
-                    credentials["hcl"] = "1"
+                    credentials["hcl"] = True
 
 
 def ecl(x):
@@ -145,7 +145,7 @@ def ecl(x):
         pos += 4
         val = findSpace(x, pos)
         if val in eyes:                          # value check
-            credentials["ecl"] = "1"
+            credentials["ecl"] = True
 
 
 def pid(x):
@@ -155,7 +155,7 @@ def pid(x):
         val = findSpace(x, pos)
         if len(val) == 9:                    # 9 digits check
             if all(c in string.digits for c in val):  # numbers check
-                credentials["pid"] = "1"
+                credentials["pid"] = True
 
 
 
@@ -165,18 +165,18 @@ valid = 0
 for x in f:
     if(x == "\n"): # if line is newline, check passport and make new passport
 
-        if "" not in credentials.values(): # if no empty spots, passport valid
+        if False not in credentials.values(): # if only True in credentials
             valid += 1
 
-        for i in credentials:  # reset check values
-            credentials[i] = ""
+        for i in credentials:  # reset all values for next passport
+            credentials[i] = False
 
     else:
         x = x.rstrip()
         for i in credentials:   # check every value
-            eval(i + "(\""+ x +"\")")
+            eval(i + "(x)")
 else:
-    if "" not in credentials.values():
+    if False not in credentials.values():
         valid += 1
 
 f.close()
