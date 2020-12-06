@@ -1,3 +1,11 @@
+def getCurrentID(l):
+    row = l[:7].replace("F", "0")
+    row = "0b" + row.replace("B", "1")
+    column = l[7:].replace("L", "0")
+    column = "0b" + column.replace("R", "1")
+
+    return int(row, 2) * 8 + int(column, 2)
+
 # part one
 
 f = open("05.txt", "r")
@@ -5,21 +13,7 @@ f = open("05.txt", "r")
 highestID = 0
 
 for l in f:
-    l = l.rstrip()
-    row = "0b"
-    column = "0b"
-    for c in l:
-        if(c == "F"):
-            row += "0"
-        if(c == "B"):
-            row += "1"
-        if(c == "L"):
-            column += "0"
-        if(c == "R"):
-            column += "1"
-
-    currentID = int(row, 2) * 8 + int(column, 2)
-
+    currentID = getCurrentID(l.rstrip())
     if highestID < currentID:
         highestID = currentID
 
@@ -41,21 +35,7 @@ f = open("05.txt", "r")
 passes = []
 
 for l in f:
-    l = l.rstrip()
-    row = "0b"
-    column = "0b"
-    for c in l:
-        if(c == "F"):
-            row += "0"
-        if(c == "B"):
-            row += "1"
-        if(c == "L"):
-            column += "0"
-        if(c == "R"):
-            column += "1"
-
-    currentID = int(row, 2) * 8 + int(column, 2)
-    passes.append(currentID)
+    passes.append(getCurrentID(l.rstrip()))
 
 f.close()
 
