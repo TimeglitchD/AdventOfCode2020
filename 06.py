@@ -1,33 +1,30 @@
 # part one
 
 total = 0
-yes = []
+group = ""
 import string
 
 f = open("06.txt", "r")
 
 for l in f:
     if(l == "\n"): # if line is newline, group ends
-        total += len(yes) # add number of letters in list to total
-        yes = []
+        total += len(list(set(list(group)))) # add number of letters in list to total
+        group = ""
     else:
         l = l.rstrip()
-        for c in l:
-            if c not in yes:
-                yes.append(c) # add unique letters to list
-else: # if end of file, group ends
-    total += len(yes) # add number of letters in list to total
-    yes = []
+        group += l
+        
+total += len(set(list(group))) # add number of letters in list to total
 
 f.close()
 print(total)
+
 
 # part two
 
 import string
 
 total = 0
-yes = list(string.ascii_lowercase)
 no = []
 import string
 
@@ -35,19 +32,16 @@ f = open("06.txt", "r")
 
 for l in f:
     if(l == "\n"): # if line is newline, group ends
-        total += len(yes) # add number of letters in list to total
-        yes = list(string.ascii_lowercase)
+        total += (26-len(set(no))) # add number of letters in list to total
         no = []
     else:
         l = l.rstrip()
-        for c in yes:
+        for c in string.ascii_lowercase:
             if c not in l:
                 no.append(c) # add missing letters from each person in group to list
-        for c in no:
-            if c in yes:
-                yes.remove(c) # remove all the letters from missing letter list from the total list
 else: # if end of file, group ends
-    total += len(yes) # add number of letters in list to total
+    total += (26-len(set(no))) # add number of letters in list to total
+
 
 f.close()
 print(total)
